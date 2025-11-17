@@ -4,6 +4,15 @@ import 'country.dart';
 import 'country_list_theme_data.dart';
 import 'country_list_view.dart';
 
+/// Helper function to determine if a locale uses RTL text direction
+bool _isRtlLocale(Locale? locale) {
+  if (locale == null) return false;
+  
+  // RTL language codes
+  const rtlLanguages = ['ar', 'he', 'fa', 'ur', 'ps', 'ku'];
+  return rtlLanguages.contains(locale.languageCode);
+}
+
 void showCountryListBottomSheet({
   required BuildContext context,
   required ValueChanged<Country> onSelect,
@@ -104,27 +113,67 @@ Widget _builder(
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        child: Column(
-          children: [
-            header,
-            Flexible(
-              child: CountryListView(
-                onSelect: onSelect,
-                exclude: exclude,
-                favorite: favorite,
-                countryFilter: countryFilter,
-                showPhoneCode: showPhoneCode,
-                countryListTheme: countryListTheme,
-                searchAutofocus: searchAutofocus,
-                showWorldWide: showWorldWide,
-                showSearch: showSearch,
-                customFlagBuilder: customFlagBuilder,
-                locale: locale,
-              ),
-            ),
-          ],
+        child: _buildContent(
+          header,
+          onSelect,
+          exclude,
+          favorite,
+          countryFilter,
+          showPhoneCode,
+          countryListTheme,
+          searchAutofocus,
+          showWorldWide,
+          showSearch,
+          customFlagBuilder,
+          locale,
         ),
       ),
     ),
   );
+}
+
+Widget _buildContent(
+  Widget header,
+  ValueChanged<Country> onSelect,
+  List<String>? exclude,
+  List<String>? favorite,
+  List<String>? countryFilter,
+  bool showPhoneCode,
+  CountryListThemeData? countryListTheme,
+  bool searchAutofocus,
+  bool showWorldWide,
+  bool showSearch,
+  CustomFlagBuilder? customFlagBuilder,
+  Locale? locale,
+) {
+  final content = Column(
+    children: [
+      header,
+      Flexible(
+        child: CountryListView(
+          onSelect: onSelect,
+          exclude: exclude,
+          favorite: favorite,
+          countryFilter: countryFilter,
+          showPhoneCode: showPhoneCode,
+          countryListTheme: countryListTheme,
+          searchAutofocus: searchAutofocus,
+          showWorldWide: showWorldWide,
+          showSearch: showSearch,
+          customFlagBuilder: customFlagBuilder,
+          locale: locale,
+        ),
+      ),
+    ],
+  );
+
+  // Wrap with Directionality if locale is provided and is RTL
+  if (locale != null && _isRtlLocale(locale)) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: content,
+    );
+  }
+
+  return content;
 }
