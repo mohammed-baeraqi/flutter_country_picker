@@ -53,6 +53,9 @@ class CountryListThemeData {
   // Favorite list divider
   final Widget? divider;
 
+  // Hint text style for search box
+  final TextStyle? hintTextStyle;
+
   const CountryListThemeData({
     this.backgroundColor,
     this.textStyle,
@@ -66,5 +69,6 @@ class CountryListThemeData {
     this.margin,
     this.emojiFontFamilyFallback,
     this.divider,
+    this.hintTextStyle,
   });
 }
