@@ -50,6 +50,9 @@ export 'src/country_service.dart';
 /// along with keyboard when textfield is focused. It could be useful when
 /// bottomSheet height is smaller than half of the screen. Otherwise it
 /// shouldn't be set. It has a default value of false.
+///
+/// An optional [locale] argument can be used to override the default locale
+/// for country names. If not provided, the locale from the context will be used.
 
 void showCountryPicker({
   required BuildContext context,
@@ -68,6 +71,7 @@ void showCountryPicker({
   bool useRootNavigator = false,
   bool moveAlongWithKeyboard = false,
   Widget header = const SizedBox.shrink(),
+  Locale? locale,
 }) {
   assert(
     exclude == null || countryFilter == null,
@@ -90,5 +94,6 @@ void showCountryPicker({
     useRootNavigator: useRootNavigator,
     moveAlongWithKeyboard: moveAlongWithKeyboard,
     header: header,
+    locale: locale,
   );
 }

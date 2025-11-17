@@ -59,6 +59,14 @@ MaterialApp(
 * `showWorldWide` An optional argument for showing "World Wide" option at the beginning of the list
 * `favorite` Can be used to show the favorite countries at the top of the list (optional).
 * `moveAlongWithKeyboard` Can be used  to move bottomSheet along with keyboard when textfield is focused (optional).
+* `locale`: Can be used to override the default locale for country names. If not provided, the locale from the context will be used (optional).
+  ```Dart
+  showCountryPicker(
+    context: context,
+    locale: Locale('ar'), // Force Arabic country names
+    onSelect: (Country country) => print('Select country: ${country.displayName}'),
+  );
+  ```
 * `countryListTheme`: Can be used to customize the country list's bottom sheet and widgets that lie within it. (optional). 
   ```Dart
   showCountryPicker(

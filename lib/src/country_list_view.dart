@@ -48,6 +48,9 @@ class CountryListView extends StatefulWidget {
   /// Custom builder function for flag widget
   final CustomFlagBuilder? customFlagBuilder;
 
+  /// Optional locale to override the default locale from context
+  final Locale? locale;
+
   const CountryListView({
     Key? key,
     required this.onSelect,
@@ -60,6 +63,7 @@ class CountryListView extends StatefulWidget {
     this.showWorldWide = false,
     this.showSearch = true,
     this.customFlagBuilder,
+    this.locale,
   })  : assert(
           exclude == null || countryFilter == null,
           'Cannot provide both exclude and countryFilter',
@@ -139,10 +143,18 @@ class _CountryListViewState extends State<CountryListView> {
     }
   }
 
+  CountryLocalizations? _getLocalizations(BuildContext context) {
+    if (widget.locale != null) {
+      return CountryLocalizations(widget.locale!);
+    }
+    return CountryLocalizations.of(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final localizations = _getLocalizations(context);
     final String searchLabel =
-        CountryLocalizations.of(context)?.countryName(countryCode: 'search') ??
+        localizations?.countryName(countryCode: 'search') ??
             'Search';
 
     return Column(
@@ -201,7 +213,8 @@ class _CountryListViewState extends State<CountryListView> {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          country.nameLocalized = CountryLocalizations.of(context)
+          final localizations = _getLocalizations(context);
+          country.nameLocalized = localizations
               ?.countryName(countryCode: country.countryCode)
               ?.replaceAll(RegExp(r"\s+"), " ");
           widget.onSelect(country);
@@ -234,7 +247,7 @@ class _CountryListViewState extends State<CountryListView> {
               ),
               Expanded(
                 child: Text(
-                  CountryLocalizations.of(context)
+                  _getLocalizations(context)
                           ?.countryName(countryCode: country.countryCode)
                           ?.replaceAll(RegExp(r"\s+"), " ") ??
                       country.name,
@@ -269,8 +282,7 @@ class _CountryListViewState extends State<CountryListView> {
 
   void _filterSearchResults(String query) {
     List<Country> _searchResult = <Country>[];
-    final CountryLocalizations? localizations =
-        CountryLocalizations.of(context);
+    final CountryLocalizations? localizations = _getLocalizations(context);
 
     if (query.isEmpty) {
       _searchResult.addAll(_countryList);

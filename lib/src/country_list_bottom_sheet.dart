@@ -21,6 +21,7 @@ void showCountryListBottomSheet({
   bool useRootNavigator = false,
   bool moveAlongWithKeyboard = false,
   Widget header = const SizedBox.shrink(),
+  Locale? locale,
 }) {
   showModalBottomSheet(
     context: context,
@@ -42,6 +43,7 @@ void showCountryListBottomSheet({
       moveAlongWithKeyboard,
       customFlagBuilder,
       header,
+      locale,
     ),
   ).whenComplete(() {
     if (onClosed != null) onClosed();
@@ -62,6 +64,7 @@ Widget _builder(
   bool moveAlongWithKeyboard,
   CustomFlagBuilder? customFlagBuilder,
   Widget header,
+  Locale? locale,
 ) {
   final device = MediaQuery.of(context).size.height;
   final statusBarHeight = MediaQuery.of(context).padding.top;
@@ -116,6 +119,7 @@ Widget _builder(
                 showWorldWide: showWorldWide,
                 showSearch: showSearch,
                 customFlagBuilder: customFlagBuilder,
+                locale: locale,
               ),
             ),
           ],

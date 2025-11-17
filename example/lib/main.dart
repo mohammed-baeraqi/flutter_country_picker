@@ -62,17 +62,48 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Locale? _selectedLocale;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Demo for country picker')),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            showCountryPicker(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Locale selector
+            DropdownButton<Locale?>(
+              value: _selectedLocale,
+              hint: Text('Select Language (Optional)'),
+              items: [
+                DropdownMenuItem(value: null, child: Text('Use System Locale')),
+                DropdownMenuItem(value: Locale('en'), child: Text('English')),
+                DropdownMenuItem(value: Locale('ar'), child: Text('Arabic')),
+                DropdownMenuItem(value: Locale('es'), child: Text('Spanish')),
+                DropdownMenuItem(value: Locale('de'), child: Text('German')),
+                DropdownMenuItem(value: Locale('fr'), child: Text('French')),
+                DropdownMenuItem(value: Locale('ja'), child: Text('Japanese')),
+                DropdownMenuItem(value: Locale('zh', 'CN'), child: Text('Chinese (Simplified)')),
+              ],
+              onChanged: (Locale? newLocale) {
+                setState(() {
+                  _selectedLocale = newLocale;
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                showCountryPicker(
               context: context,
               //Optional.  Can be used to exclude(remove) one ore more country from the countries list (optional).
               exclude: <String>['KN', 'MF'],
@@ -118,9 +149,13 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
+              // NEW: Override locale parameter
+              locale: _selectedLocale,
             );
           },
           child: const Text('Show country picker'),
+        ),
+          ],
         ),
       ),
     );
