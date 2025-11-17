@@ -157,6 +157,7 @@ class _CountryListViewState extends State<CountryListView> {
             decoration: widget.countryListTheme?.inputDecoration ??
                 InputDecoration(
                   labelText: searchLabel,
+                  labelStyle: widget.countryListTheme?.labelTextStyle ?? _defaultTextStyle,
                   hintText: searchLabel,
                   hintStyle: widget.countryListTheme?.hintTextStyle ?? _defaultTextStyle,
                   prefixIcon: const Icon(Icons.search),

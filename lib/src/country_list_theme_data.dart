@@ -56,6 +56,9 @@ class CountryListThemeData {
   // Hint text style for search box
   final TextStyle? hintTextStyle;
 
+  // Label text style for search box
+  final TextStyle? labelTextStyle;
+
   const CountryListThemeData({
     this.backgroundColor,
     this.textStyle,
@@ -70,5 +73,6 @@ class CountryListThemeData {
     this.emojiFontFamilyFallback,
     this.divider,
     this.hintTextStyle,
+    this.labelTextStyle,
   });
 }
