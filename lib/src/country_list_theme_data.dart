@@ -50,6 +50,9 @@ class CountryListThemeData {
   /// the margin of the bottom sheet
   final EdgeInsets? margin;
 
+  // Favorite list divider
+  final Widget? divider;
+
   const CountryListThemeData({
     this.backgroundColor,
     this.textStyle,
@@ -62,5 +65,6 @@ class CountryListThemeData {
     this.padding,
     this.margin,
     this.emojiFontFamilyFallback,
+    this.divider,
   });
 }

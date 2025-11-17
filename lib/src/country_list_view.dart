@@ -175,9 +175,9 @@ class _CountryListViewState extends State<CountryListView> {
             children: [
               if (_favoriteList != null && !_isSearching) ...[
                 ..._favoriteList!.map<Widget>((currency) => _listRow(currency)),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Divider(thickness: 1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child:  widget.countryListTheme?.divider ?? const Divider(thickness: 1),
                 ),
               ],
               ..._filteredList.map<Widget>((country) => _listRow(country)),
