@@ -147,7 +147,7 @@ class _CountryListViewState extends State<CountryListView> {
 
     return Column(
       children: <Widget>[
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
         if (widget.showSearch)
           TextField(
             autofocus: _searchAutofocus,
@@ -157,9 +157,7 @@ class _CountryListViewState extends State<CountryListView> {
             decoration: widget.countryListTheme?.inputDecoration ??
                 InputDecoration(
                   labelText: searchLabel,
-                  labelStyle: widget.countryListTheme?.labelTextStyle ?? _defaultTextStyle,
                   hintText: searchLabel,
-                  hintStyle: widget.countryListTheme?.hintTextStyle ?? _defaultTextStyle,
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -172,6 +170,7 @@ class _CountryListViewState extends State<CountryListView> {
               _checkSearchText(value);
             },
           ),
+        const SizedBox(height: 8),
         Expanded(
           child: ListView(
             children: [
